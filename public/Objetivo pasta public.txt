@@ -1,7 +1,0 @@
-As pastas public/ e views/ têm funções diferentes na estrutura de pastas sugerida anteriormente.
-
-A pasta public/ é onde você deve colocar todos os arquivos estáticos do seu aplicativo web, como imagens, arquivos CSS e arquivos JavaScript. Esses arquivos são servidos diretamente pelo servidor web (como o NodeJS), sem que haja processamento adicional, e geralmente não contêm lógica de negócios.
-
-Já a pasta views/ é onde você deve colocar os arquivos que contêm as visualizações da sua aplicação web. Esses arquivos geralmente são arquivos HTML que contêm marcação e lógica de apresentação, e são responsáveis por renderizar o conteúdo dinâmico da aplicação gerado pelo back-end.
-
-Em resumo, a pasta public/ contém os arquivos estáticos do seu aplicativo (CSS, JavaScript, imagens, etc.) que não contêm lógica de negócios, enquanto a pasta views/ contém os arquivos HTML que contêm as visualizações e a lógica de apresentação da aplicação.
