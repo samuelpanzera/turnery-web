@@ -1,7 +1,11 @@
-import { ThemeProvider } from "@/components/theme-provider";
+import type { Metadata } from "next";
 import "./globals.css";
 import Header from "@/components/headers/Header";
-import { useTheme } from "next-themes"
+
+export const metadata: Metadata = {
+  title: "TornoMix - Tornearia e soldas",
+  description: "Site da empresa de tornearia, para orçamentos e serviços",
+};
 
 export default function RootLayout({
   children,
@@ -9,15 +13,8 @@ export default function RootLayout({
   return (
     <html lang="pt-br" suppressHydrationWarning>
       <body className={`antialiased`}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <Header />
-          {children}
-        </ThemeProvider>
+        <Header />
+        {children}
       </body>
     </html>
   );
