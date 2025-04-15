@@ -22,7 +22,7 @@ export default function RootLayout({
           className="object-cover -z-10"
           priority
         />
-        {/* {children} */}
+        {children}
       </body>
     </html>
   );
