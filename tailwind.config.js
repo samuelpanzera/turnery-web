@@ -1,18 +1,24 @@
-// tailwind.config.js (ou .mjs/.ts se preferir/configurado)
-
-/** @type {import('tailwindcss').Config} */
+// tailwind.config.js
 module.exports = {
   content: [
-    './pages/**/*.{js,ts,jsx,tsx,mdx}',
-    './app/**/*.{js,ts,jsx,tsx,mdx}',
-    './components/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/**/*.{js,ts,jsx,tsx,mdx}',
+    "./pages/**/*.{js,ts,jsx,tsx}",
+    "./components/**/*.{js,ts,jsx,tsx}",
   ],
+  darkMode: 'class', // habilita o modo escuro baseado em classes
   theme: {
     extend: {
-
+      colors: {
+        // Cores principais da TornoMix
+        'tornomix': {
+          'marinho': '#0A1E33',    // Azul Marinho Escuro do logotipo
+          'metal': '#647789',      // Cinza Metálico
+          'background': '#F0F2F5', // Cinza Claro para fundos
+          'aco': '#3D5A80',        // Azul Aço para botões e links
+          'alerta': '#C84B31',     // Vermelho Industrial para alertas
+          'sucesso': '#2A9D8F',    // Verde Máquina para sucessos
+        },
+      },
     },
   },
-  plugins: [
-  ],
+  plugins: [],
 }
