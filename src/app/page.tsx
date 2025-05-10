@@ -1,7 +1,11 @@
+import HeroSection from "@/components/hero/HeroSection";
+import ServicesSection from "@/components/sections/ServicesSection";
+
 export default function Home() {
   return (
     <main>
-      <h1>OLA MUNDO</h1>
+      <HeroSection />
+      <ServicesSection />
     </main>
   );
 }
