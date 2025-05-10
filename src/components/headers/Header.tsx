@@ -3,12 +3,12 @@ import Link from "next/link";
 
 export default function Header() {
   return (
-    <header className="bg-[#ffffff] px-10 py-4">
-      <div className="flex justify-between items-center w-full max-w-[1500px] mx-auto text-sm text-gray-600 mb-2 border-b pb-2">
+    <header className="fixed top-0 left-0 right-0 z-20 px-10 py-4 transition-all bg-gradient-to-b from-black/80 to-black/40 backdrop-blur-sm shadow-md">
+      <div className="flex justify-between items-center w-full max-w-[1500px] mx-auto text-sm text-white mb-2 border-b border-white/30 pb-2">
         <div className="flex items-center gap-2">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="h-4 w-4 text-green-600"
+            className="h-4 w-4 text-green-400"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -25,7 +25,7 @@ export default function Header() {
         <div className="flex items-center gap-2">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="h-4 w-4 text-red-600"
+            className="h-4 w-4 text-red-400"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -49,18 +49,41 @@ export default function Header() {
         </div>
       </div>
       <div className="flex justify-between items-center w-full max-w-[1500px] mx-auto">
-        <Image
-          alt="Logotipo da empresa"
-          width={220}
-          height={30}
-          src="/assets/logotipo.png"
-          className="ml-12"
-        />
-        <nav className="mr-12 flex gap-6 items-center font-bold [&>a]:relative [&>a]:after:absolute [&>a]:after:bg-black [&>a]:after:h-0.5 [&>a]:after:w-0 [&>a]:after:left-0 [&>a]:after:bottom-0 [&>a]:after:transition-all [&>a:hover]:after:w-full">
-          <Link href="/">Home</Link>
-          <Link href="/sobre-nos">Sobre nós</Link>
-          <Link href="/fale-conosco">Fale Conosco</Link>
-          <Link href="/orcamento">Orçamento</Link>
+        <div className="ml-12">
+            <Link href="/">
+            <Image
+              src="/assets/logotipo.png"
+              alt="Logotipo da empresa"
+              width={220}
+              height={30}
+              className="drop-shadow-[0_0_0.5px_rgba(255,255,255,0.7)] filter brightness-110 contrast-110 outline-white"
+              style={{ filter: "drop-shadow(0px 0px 1px rgba(255,255,255,0.8))" }}
+              priority
+            />
+            </Link>
+        </div>
+        <nav className="mr-12 flex gap-6 items-center font-bold text-white [&>a]:relative [&>a]:after:absolute [&>a]:after:bg-yellow-400 [&>a]:after:h-0.5 [&>a]:after:w-0 [&>a]:after:left-0 [&>a]:after:bottom-0 [&>a]:after:transition-all [&>a:hover]:after:w-full [&>a]:text-shadow-sm">
+          <Link href="/" className="hover:text-yellow-300 transition-colors">
+            Home
+          </Link>
+          <Link
+            href="/sobre-nos"
+            className="hover:text-yellow-300 transition-colors"
+          >
+            Sobre nós
+          </Link>
+          <Link
+            href="/fale-conosco"
+            className="hover:text-yellow-300 transition-colors"
+          >
+            Fale Conosco
+          </Link>
+          <Link
+            href="/orcamento"
+            className="hover:text-yellow-300 transition-colors"
+          >
+            Orçamento
+          </Link>
         </nav>
       </div>
     </header>
