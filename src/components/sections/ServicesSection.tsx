@@ -1,6 +1,13 @@
 "use client";
 
-import { Wrench, Clock4, Ruler, ShieldCheck, Cog, ScissorsSquare } from "lucide-react";
+import {
+  Wrench,
+  Clock4,
+  Ruler,
+  ShieldCheck,
+  Cog,
+  ScissorsSquare,
+} from "lucide-react";
 
 const services = [
   {
@@ -37,9 +44,9 @@ const services = [
 
 export default function ServicesSection() {
   return (
-    <section className="py-20 bg-gray-100 text-gray-800" id="servicos">
+    <section className="py-20 bg-gray-900 text-gray-100" id="servicos">
       <div className="max-w-7xl mx-auto px-6">
-        <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
+        <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-white">
           Nossos Serviços
         </h2>
 
@@ -47,11 +54,13 @@ export default function ServicesSection() {
           {services.map((service, index) => (
             <div
               key={index}
-              className="bg-white p-6 rounded-lg shadow hover:shadow-lg transition"
+              className="bg-gray-800 p-6 rounded-lg shadow hover:shadow-lg transition border border-gray-700"
             >
               <div className="mb-4">{service.icon}</div>
-              <h3 className="text-xl font-semibold mb-2">{service.title}</h3>
-              <p className="text-gray-600">{service.desc}</p>
+              <h3 className="text-xl font-semibold mb-2 text-white">
+                {service.title}
+              </h3>
+              <p className="text-gray-300">{service.desc}</p>
             </div>
           ))}
         </div>
