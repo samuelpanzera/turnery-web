@@ -3,6 +3,7 @@ module.exports = {
   content: [
     "./pages/**/*.{js,ts,jsx,tsx}",
     "./components/**/*.{js,ts,jsx,tsx}",
+    "./src/**/*.{js,ts,jsx,tsx}", // Adicionado para incluir arquivos na pasta src
   ],
   darkMode: 'class', // habilita o modo escuro baseado em classes
   theme: {
