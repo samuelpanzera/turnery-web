@@ -3,6 +3,7 @@
 import { useRef, useState, useEffect } from "react";
 import { FaUpload, FaCheck, FaTimes } from "react-icons/fa";
 import { Button } from "../ui/button";
+import WhatsAppRedirectSuccess from "../redirects/WhatsAppRedirectSuccess";
 
 export default function OrcamentSection() {
   const ALLOWED_IMAGE_FORMATS = ["image/jpeg", "image/jpg", "image/png"];
@@ -26,7 +27,7 @@ export default function OrcamentSection() {
     telefone: "",
     empresa: "",
     descricaoPeca: "",
-    quantidade: "",
+    quantidade: 1,
     prioridade: "",
     material: "",
     observacoes: "",
@@ -122,19 +123,20 @@ export default function OrcamentSection() {
       setIsSubmitting(false);
       setSubmitStatus("success");
 
-      setFormData({
-        nome: "",
-        email: "",
-        telefone: "",
-        empresa: "",
-        descricaoPeca: "",
-        quantidade: "",
-        prioridade: "",
-        material: "",
-        observacoes: "",
-      });
-
-      setTimeout(() => setSubmitStatus("idle"), 5000);
+      setTimeout(() => {
+        setFormData({
+          nome: "",
+          email: "",
+          telefone: "",
+          empresa: "",
+          descricaoPeca: "",
+          quantidade: 1,
+          prioridade: "",
+          material: "",
+          observacoes: "",
+        });
+        setSubmitStatus("idle");
+      }, 5000);
     }, 1500);
   };
 
@@ -145,7 +147,7 @@ export default function OrcamentSection() {
   return (
     <section
       ref={sectionRef}
-      className="pt-35 py-10 bg-gray-900 text-gray-100"
+      className="pt-20 py-10 bg-gray-900 text-gray-100"
       id="orcamento"
     >
       <div className="max-w-7xl mx-auto px-2">
@@ -160,20 +162,19 @@ export default function OrcamentSection() {
         <div className="grid grid-cols-1 gap-12 items-start">
           <div className="bg-gray-800 rounded-lg shadow-md p-8 border border-gray-700">
             {submitStatus === "success" ? (
-              <div className="bg-green-800 bg-opacity-30 border border-green-700 rounded-md p-4">
-                <div className="flex items-center mb-3">
-                  <FaCheck className="text-green-500 mr-3 flex-shrink-0" />
-                  <p className="text-green-400 font-semibold">
-                    Solicitação enviada com sucesso!
-                  </p>
-                </div>
-                <p className="text-gray-300 ml-8">
-                  Nossa equipe técnica analisará seu pedido e entrará em contato
-                  em breve com um orçamento detalhado, incluindo valores e
-                  prazos de entrega de acordo com a complexidade da peça e sua
-                  prioridade. Obrigado pela preferência!
-                </p>
-              </div>
+              <WhatsAppRedirectSuccess
+                submitStatus={submitStatus}
+                formData={{
+                  nome: formData.nome,
+                  email: formData.email,
+                  telefone: formData.telefone,
+                  empresa: formData.empresa,
+                  descricao: formData.descricaoPeca,
+                  quantidade: formData.quantidade,
+                  prioridade: formData.prioridade,
+                  material: formData.material,
+                }}
+              />
             ) : (
               <form onSubmit={handleSubmit} className="space-y-6">
                 <p className="text-sm text-gray-400 mb-4">
