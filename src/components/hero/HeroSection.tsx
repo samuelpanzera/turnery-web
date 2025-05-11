@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Link from "next/link";
 
 export default function HeroSection() {
   return (
@@ -20,12 +19,12 @@ export default function HeroSection() {
         <p className="mt-4 text-lg md:text-xl">
           +30 anos de experiência com usinagem industrial
         </p>
-        <Link
-          href="/orcamento"
+        <a
+          href="#orcamento"
           className="mt-6 inline-block bg-yellow-500 hover:bg-yellow-600 text-black font-semibold py-3 px-6 rounded-lg shadow-md transition"
         >
           Solicitar Orçamento
-        </Link>
+        </a>
       </div>
     </section>
   );
