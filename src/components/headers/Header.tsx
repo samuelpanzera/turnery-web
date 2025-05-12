@@ -116,12 +116,12 @@ export default function Header() {
           >
             Fale Conosco
           </Link>
-          <a
-            href="#orcamento"
+          <Link
+            href="/#orcamento"
             className="hover:text-yellow-300 transition-colors"
           >
             Orçamento
-          </a>
+          </Link>
         </nav>
       </div>
     </header>
