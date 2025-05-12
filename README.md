@@ -2,6 +2,8 @@
 
 Repositório do projeto de site para uma oficina de tornearia, desenvolvido com foco em escalabilidade, performance e boas práticas modernas de desenvolvimento web.
 
+![image](https://github.com/user-attachments/assets/81e991ce-1716-43de-b1d2-758adfec4a72)
+
 ## 🚀 Tecnologias Utilizadas
 
 * **Next.js**: Framework React com suporte a renderização híbrida (SSR e SSG), ideal para SEO e performance.
