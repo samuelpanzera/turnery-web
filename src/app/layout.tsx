@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Header from "@/components/headers/Header";
+import Footer from "@/components/footer/Footer";
 
 export const metadata: Metadata = {
   title: "TornoMix - Tornearia e soldas",
@@ -16,6 +17,7 @@ export default function RootLayout({
         <Header />
 
         {children}
+        <Footer />
       </body>
     </html>
   );
