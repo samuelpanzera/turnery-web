@@ -2,7 +2,11 @@
 
 Repositório do projeto de site para uma oficina de tornearia, desenvolvido com foco em escalabilidade, performance e boas práticas modernas de desenvolvimento web.
 
-![image](https://github.com/user-attachments/assets/81e991ce-1716-43de-b1d2-758adfec4a72)
+## 🎯 Propósito do Projeto
+
+Fiz este site com o intuito de criar um projeto real para meu pai, dono de uma oficina de usinagem. A ideia é permitir que clientes solicitem orçamentos de fabricação de peças diretamente pelo site, aumentando o alcance do negócio e profissionalizando o atendimento online.
+
+Com esse projeto, busco demonstrar como é possível aumentar o número de clientes que entram em contato, provando sua eficiência por meio de métricas reais, utilizando ferramentas como o Google Analytics para acompanhar taxas de conversão e interação.
 
 ## 🚀 Tecnologias Utilizadas
 
