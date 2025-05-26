@@ -7,6 +7,7 @@ import Analytics from "@/components/analytics/Analytics";
 export const metadata: Metadata = {
   title: "TornoMix - Tornearia e soldas",
   description: "Site da empresa de tornearia, para orçamentos e serviços",
+  viewport: "width=device-width, initial-scale=1, maximum-scale=5",
 };
 
 export default function RootLayout({
@@ -14,13 +15,13 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="pt-br" suppressHydrationWarning>
-    <head>
-      <Analytics />
-    </head>
-      <body className={`antialiased min-h-screen relative`}>
+      <head>
+        <meta name="theme-color" content="#0A1E33" />
+        <Analytics />
+      </head>
+      <body className={`antialiased min-h-screen relative bg-gray-900`}>
         <Header />
-
-        {children}
+        <main className="flex flex-col">{children}</main>
         <Footer />
       </body>
     </html>

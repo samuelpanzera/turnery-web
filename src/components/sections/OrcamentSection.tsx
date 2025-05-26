@@ -147,20 +147,20 @@ export default function OrcamentSection() {
   return (
     <section
       ref={sectionRef}
-      className="pt-20 py-10 bg-gray-900 text-gray-100"
+      className="pt-12 sm:pt-16 md:pt-20 pb-10 bg-gray-900 text-gray-100"
       id="orcamento"
     >
-      <div className="max-w-7xl mx-auto px-2">
-        <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 text-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-4 text-white">
           Solicite um Orçamento
         </h2>
-        <p className="text-center mb-12 max-w-3xl mx-auto text-gray-300">
+        <p className="text-center mb-8 sm:mb-12 max-w-3xl mx-auto text-gray-300 text-sm sm:text-base">
           Precisa de peças sob medida para o seu projeto? Preencha nosso
           formulário para receber uma proposta personalizada rapidamente.
         </p>
 
-        <div className="grid grid-cols-1 gap-12 items-start">
-          <div className="bg-gray-800 rounded-lg shadow-md p-8 border border-gray-700">
+        <div className="grid grid-cols-1 gap-8 sm:gap-12 items-start">
+          <div className="bg-gray-800 rounded-lg shadow-md p-4 sm:p-6 md:p-8 border border-gray-700">
             {submitStatus === "success" ? (
               <WhatsAppRedirectSuccess
                 submitStatus={submitStatus}
@@ -176,19 +176,19 @@ export default function OrcamentSection() {
                 }}
               />
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <p className="text-sm text-gray-400 mb-4">
+              <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
+                <p className="text-xs sm:text-sm text-gray-400 mb-4">
                   Campos marcados com asterisco (*) são obrigatórios.
                 </p>
-                <div className="bg-gray-800 p-4 rounded-md">
-                  <h2 className="text-xl font-semibold text-tornomix-aco mb-4">
+                <div className="bg-gray-800 p-3 sm:p-4 rounded-md">
+                  <h2 className="text-lg sm:text-xl font-semibold text-tornomix-aco mb-3 sm:mb-4">
                     Informações de Contato
                   </h2>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
                     <div>
                       <label
                         htmlFor="nome"
-                        className="block text-sm font-medium text-white mb-1"
+                        className="block text-xs sm:text-sm font-medium text-white mb-1"
                       >
                         Nome Completo*
                       </label>
@@ -199,13 +199,13 @@ export default function OrcamentSection() {
                         value={formData.nome}
                         onChange={handleInputChange}
                         required
-                        className="w-full border border-gray-300 rounded-md shadow-sm px-3 py-2 focus:outline-none focus:ring-1 focus:ring-tornomix-aco focus:border-tornomix-aco"
+                        className="w-full border border-gray-300 rounded-md shadow-sm px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-tornomix-aco focus:border-tornomix-aco"
                       />
                     </div>
                     <div>
                       <label
                         htmlFor="email"
-                        className="block text-sm font-medium text-white mb-1"
+                        className="block text-xs sm:text-sm font-medium text-white mb-1"
                       >
                         E-mail*
                       </label>
@@ -216,13 +216,13 @@ export default function OrcamentSection() {
                         value={formData.email}
                         onChange={handleInputChange}
                         required
-                        className="w-full border border-gray-300 rounded-md shadow-sm px-3 py-2 focus:outline-none focus:ring-1 focus:ring-tornomix-aco focus:border-tornomix-aco"
+                        className="w-full border border-gray-300 rounded-md shadow-sm px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-tornomix-aco focus:border-tornomix-aco"
                       />
                     </div>
                     <div>
                       <label
                         htmlFor="telefone"
-                        className="block text-sm font-medium text-white mb-1"
+                        className="block text-xs sm:text-sm font-medium text-white mb-1"
                       >
                         Telefone*
                       </label>
@@ -234,13 +234,13 @@ export default function OrcamentSection() {
                         onChange={handleInputChange}
                         required
                         placeholder="(00) 00000-0000"
-                        className="w-full border border-gray-300 rounded-md shadow-sm px-3 py-2 focus:outline-none focus:ring-1 focus:ring-tornomix-aco focus:border-tornomix-aco"
+                        className="w-full border border-gray-300 rounded-md shadow-sm px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-tornomix-aco focus:border-tornomix-aco"
                       />
                     </div>
                     <div>
                       <label
                         htmlFor="empresa"
-                        className="block text-sm font-medium text-white mb-1"
+                        className="block text-xs sm:text-sm font-medium text-white mb-1"
                       >
                         Empresa
                       </label>
@@ -250,7 +250,7 @@ export default function OrcamentSection() {
                         name="empresa"
                         value={formData.empresa}
                         onChange={handleInputChange}
-                        className="w-full border border-gray-300 rounded-md shadow-sm px-3 py-2 focus:outline-none focus:ring-1 focus:ring-tornomix-aco focus:border-tornomix-aco"
+                        className="w-full border border-gray-300 rounded-md shadow-sm px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-tornomix-aco focus:border-tornomix-aco"
                       />
                     </div>
                   </div>
@@ -448,17 +448,20 @@ export default function OrcamentSection() {
                   </div>
                 </div>
 
-                <div className="flex items-center justify-end mt-5">
+                <div className="flex justify-center mt-6">
                   <Button
                     type="submit"
                     disabled={isSubmitting}
-                    className={`px-6 py-3 bg-yellow-500 hover:bg-yellow-600 text-black font-semibold rounded-md hover:bg-tornomix-marinho focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-tornomix-aco transition duration-200 ease-in-out ${
-                      isSubmitting
-                        ? "opacity-70 cursor-not-allowed"
-                        : "cursor-pointer"
-                    }`}
+                    className="bg-yellow-500 hover:bg-yellow-600 text-black font-semibold py-2 px-4 sm:py-3 sm:px-6 rounded-lg shadow-md transition transform hover:scale-105 hover:-translate-y-1 disabled:opacity-70 disabled:cursor-not-allowed flex items-center gap-2"
                   >
-                    {isSubmitting ? "Enviando..." : "Solicitar Orçamento"}
+                    {isSubmitting ? (
+                      <>
+                        <span className="animate-spin rounded-full h-4 w-4 border-b-2 border-black"></span>
+                        <span>Enviando...</span>
+                      </>
+                    ) : (
+                      <span>Solicitar Orçamento</span>
+                    )}
                   </Button>
                 </div>
               </form>
