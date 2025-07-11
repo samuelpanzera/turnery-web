@@ -6,7 +6,7 @@ on:
       - master
     paths:
       - "apps/web/**"
-      - ".github/workflows/deploy-frontend.yml" # Opcional: roda se o próprio workflow for alterado
+      - ".github/workflows/deploy-frontend.yml"
 
   workflow_dispatch:
 
@@ -18,7 +18,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Deploy to Heroku
-        uses: akhileshns/heroku-deploy@v3
+        uses: akhileshns/heroku-deploy@v3.13.15
         with:
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
           heroku_app_name: ${{ secrets.HEROKU_APP_NAME_FRONTEND }}
