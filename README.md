@@ -1,6 +1,6 @@
 # TornoMix - Aplicação Full-Stack
 
-![TornoMix](httpsd://github.com/samuelpanzera/turnery-web/assets/101292815/1c52d7e0-2508-4127-b08e-8a0337c73b06)
+![TornoMix](httpsd://github.com/samuelpanzera/turnery-web/apps/web/public/assets/101292815/1c52d7e0-2508-4127-b08e-8a0337c73b06)
 
 Este projeto é a aplicação full-stack para a empresa de tornearia mecânica TornoMix. O objetivo é criar um canal de comunicação digital robusto, permitindo que clientes solicitem orçamentos de forma detalhada, e que a empresa gerencie esses contatos de forma centralizada e eficiente.
 
