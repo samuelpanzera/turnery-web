@@ -1,0 +1,37 @@
+name: Deploy Backend (NestJS) to Heroku
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - "apps/api/**"
+      - ".github/workflows/deploy-backend.yml"
+
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Futuros testes
+      # - name: Setup Node.js
+      #   uses: actions/setup-node@v4
+      #   with:
+      #     node-version: '20'
+      # - name: Install dependencies
+      #   run: npm ci
+      # - name: Run tests
+      #   run: npm test -- --prefix apps/api
+
+      - name: Deploy to Heroku
+        uses: akhileshns/heroku-deploy@latest
+        with:
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          heroku_app_name: ${{ secrets.HEROKU_APP_NAME_BACKEND }}
+          heroku_email: ${{ secrets.HEROKU_EMAIL }}
+
+          appdir: "apps/api"
