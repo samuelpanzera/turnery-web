@@ -3,7 +3,7 @@ name: Deploy Frontend (Next.js) to Heroku
 on:
   push:
     branches:
-      - master # ou 'main', dependendo da sua branch principal
+      - master
   workflow_dispatch:
 
 jobs:
