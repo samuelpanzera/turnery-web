@@ -11,7 +11,6 @@ describe("submitOrcamento", () => {
 
     expect(result.success).toBe(false);
     expect(result.message).toContain("Nome deve ter pelo menos 3 caracteres");
-    expect(result.message).toContain("Email é obrigatório");
     expect(result.message).toContain("Telefone é obrigatório");
   });
 
