@@ -11,7 +11,6 @@ export default function Header() {
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
-    // Set client flag to true after hydration
     setIsClient(true);
 
     const handleOrcamentoView = (event: Event) => {

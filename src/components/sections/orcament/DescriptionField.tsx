@@ -15,7 +15,7 @@ export function DescriptionField({
   id = "descricaoPeca",
   required = true,
   placeholder = "Descreva as características da peça que você precisa...",
-  rows = 3,
+  rows = 2,
 }: DescriptionFieldProps) {
   const [error, setError] = useState<string | null>(null);
 
@@ -39,7 +39,7 @@ export function DescriptionField({
   };
 
   return (
-    <div>
+    <div className="pb-5">
       <label htmlFor={id} className="block text-sm font-medium text-white mb-1">
         Infomações adicionais{required && "*"}
         {required && <span className="sr-only">(obrigatório)</span>}
@@ -52,7 +52,7 @@ export function DescriptionField({
         className={`w-full border rounded-md shadow-sm px-3 py-2 focus:outline-none focus:ring-1 transition-colors duration-200 bg-transparent text-white placeholder-gray-400 ${
           error
             ? "border-red-500 focus:border-red-500 focus:ring-red-500"
-            : "border-gray-600 focus:border-tornomix-aco focus:ring-tornomix-aco"
+            : "border-gray-300 focus:border-tornomix-aco focus:ring-tornomix-aco"
         }`}
         placeholder={placeholder}
         onChange={handleChange}
@@ -61,8 +61,8 @@ export function DescriptionField({
         aria-invalid={error ? "true" : "false"}
       />
       {!error && (
-        <p id={`${id}-help`} className="text-xs text-gray-400 mt-1">
-          {required ? "Mínimo de 10 caracteres" : "Opcional"}
+        <p id={`${id}-help`} className="text-xs text-gray-400">
+          {required ? "Mínimo de 10 caracteres" : ""}
         </p>
       )}
       {error && (

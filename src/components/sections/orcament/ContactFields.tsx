@@ -90,7 +90,7 @@ export function ContactFields({}: ContactFieldsProps) {
   };
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 pb-4">
       <div className="lg:col-span-2">
         <label
           htmlFor="nome"
@@ -106,11 +106,12 @@ export function ContactFields({}: ContactFieldsProps) {
           required
           minLength={3}
           autoComplete="name"
-          className={`w-full border rounded-md shadow-sm px-3 py-2 focus:outline-none focus:ring-1 transition-colors duration-200 bg-transparent text-white placeholder-gray-400 ${
-            errors.nome
-              ? "border-red-500 focus:border-red-500 focus:ring-red-500"
-              : "border-gray-600 focus:border-tornomix-aco focus:ring-tornomix-aco"
-          }`}
+          className={`w-full border rounded-md shadow-sm px-3 py-2 focus:outline-none focus:ring-1 transition-colors duration-200 bg-transparent text-white placeholder-gray-400 
+            ${
+              errors.nome
+                ? "border-red-500 focus:border-red-500 focus:ring-red-500"
+                : "border-gray-300 focus:border-tornomix-aco focus:ring-tornomix-aco"
+            }`}
           onChange={(e) => handleFieldChange("nome", e.target.value)}
           onBlur={(e) => handleFieldBlur("nome", e.target.value)}
           aria-describedby={errors.nome ? "nome-error" : "nome-help"}
@@ -146,7 +147,7 @@ export function ContactFields({}: ContactFieldsProps) {
           className={`w-full border rounded-md shadow-sm px-3 py-2 focus:outline-none focus:ring-1 transition-colors duration-200 bg-transparent text-white placeholder-gray-400 ${
             errors.email
               ? "border-red-500 focus:border-red-500 focus:ring-red-500"
-              : "border-gray-600 focus:border-tornomix-aco focus:ring-tornomix-aco"
+              : "border-gray-300 focus:border-tornomix-aco focus:ring-tornomix-aco"
           }`}
           onChange={(e) => handleFieldChange("email", e.target.value)}
           onBlur={(e) => handleFieldBlur("email", e.target.value)}
@@ -189,7 +190,7 @@ export function ContactFields({}: ContactFieldsProps) {
           className={`w-full border rounded-md shadow-sm px-3 py-2 focus:outline-none focus:ring-1 transition-colors duration-200 bg-transparent text-white placeholder-gray-400 ${
             errors.telefone
               ? "border-red-500 focus:border-red-500 focus:ring-red-500"
-              : "border-gray-600 focus:border-tornomix-aco focus:ring-tornomix-aco"
+              : "border-gray-300 focus:border-tornomix-aco focus:ring-tornomix-aco"
           }`}
           onChange={(e) => {
             handlePhoneChange(e);

@@ -5,7 +5,6 @@ import { submitOrcamento } from "@/app/actions";
 import { FileUpload } from "./FileUpload";
 import { SubmitButton } from "./SubmitButton";
 import { ContactFields } from "./ContactFields";
-import { FileUploadToggle } from "./FileUploadToggle";
 import { PartsQuantityField } from "./PartsQuantityField";
 import { DescriptionField } from "./DescriptionField";
 import { useFileUpload } from "@/hooks/useFileUpload";
@@ -24,7 +23,7 @@ export function OrcamentForm() {
   if (state.success) {
     return (
       <div
-        className="text-center p-4 sm:p-8"
+        className="text-center p-2 sm:p-2"
         role="status"
         aria-live="polite"
         aria-label="Formulário enviado com sucesso"
@@ -46,65 +45,52 @@ export function OrcamentForm() {
       noValidate
       aria-label="Formulário de solicitação de orçamento"
     >
-      {/* Contact Information Section */}
       <fieldset className="bg-gray-800 p-3 sm:p-4 md:p-6 rounded-md">
         <legend className="text-lg sm:text-xl font-semibold text-tornomix-aco mb-3 sm:mb-4 px-2">
           Informações de Contato
         </legend>
         <ContactFields />
+
+        <DescriptionField required={false} />
+
+        <PartsQuantityField
+          defaultValue={1}
+          name="quantidadePecas"
+          id="quantidadePecas"
+          isFileUploadEnabled={isFileUploadEnabled}
+          onToggleFileUpload={toggleFileUpload}
+        />
+
+        {isFileUploadEnabled && (
+          <div
+            className="mt-4"
+            role="region"
+            aria-label="Seção de upload de arquivos"
+          >
+            <FileUpload
+              file={file}
+              fileError={fileError}
+              onFileChange={handleFileChange}
+            />
+          </div>
+        )}
+
+        <input
+          type="hidden"
+          name="fileUploadEnabled"
+          value={isFileUploadEnabled.toString()}
+        />
+
+        {!state.success && state.message && (
+          <div
+            className="p-3 bg-red-50 border border-red-200 rounded-md"
+            role="alert"
+            aria-live="assertive"
+          >
+            <p className="text-sm text-red-600">{state.message}</p>
+          </div>
+        )}
       </fieldset>
-
-      {/* Parts Information Section */}
-      <fieldset className="bg-gray-800 p-3 sm:p-4 md:p-6 rounded-md">
-        <legend className="text-lg sm:text-xl font-semibold text-tornomix-aco mb-3 sm:mb-4 px-2">
-          Detalhes da Peça
-        </legend>
-        <div className="space-y-4 sm:space-y-6">
-          <PartsQuantityField />
-
-          {/* Description Field */}
-          <DescriptionField required={false} />
-
-          {/* File Upload Toggle */}
-          <FileUploadToggle
-            isFileUploadEnabled={isFileUploadEnabled}
-            onToggle={toggleFileUpload}
-          />
-
-          {/* Conditional File Upload */}
-          {isFileUploadEnabled && (
-            <div
-              className="mt-4"
-              role="region"
-              aria-label="Seção de upload de arquivos"
-            >
-              <FileUpload
-                file={file}
-                fileError={fileError}
-                onFileChange={handleFileChange}
-              />
-            </div>
-          )}
-        </div>
-      </fieldset>
-
-      {/* Hidden field to track file upload toggle state */}
-
-      <input
-        type="hidden"
-        name="fileUploadEnabled"
-        value={isFileUploadEnabled.toString()}
-      />
-
-      {!state.success && state.message && (
-        <div
-          className="p-3 bg-red-50 border border-red-200 rounded-md"
-          role="alert"
-          aria-live="assertive"
-        >
-          <p className="text-sm text-red-600">{state.message}</p>
-        </div>
-      )}
 
       <div className="flex justify-center mt-6 px-4">
         <SubmitButton />

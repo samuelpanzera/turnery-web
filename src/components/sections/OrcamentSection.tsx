@@ -12,7 +12,7 @@ export default function OrcamentSection() {
           uma proposta personalizada.
         </p>
 
-        <div className="bg-gray-800 rounded-lg shadow-md p-8 border border-gray-700">
+        <div className="bg-gray-800 rounded-lg shadow-md p-1 border border-gray-700 pb-5 pt-6">
           <OrcamentForm />
         </div>
       </div>
