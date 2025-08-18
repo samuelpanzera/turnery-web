@@ -38,7 +38,7 @@ const WhatsAppRedirectSuccess = ({ submitStatus, formData }: Props) => {
 - Telefone: ${telefone}
 - Empresa: ${empresa || "Não informado"}
 
-- Descrição da peça: ${descricao}
+- Infomações adicionais: ${descricao}
 - Quantidade: ${quantidade}
 - Prioridade: ${prioridade || "Não especificada"}
 - Material: ${material || "Não especificado"}
