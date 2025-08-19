@@ -1,114 +1,100 @@
 "use server";
 
-interface ValidationError {
-  field: string;
+import zod from "zod";
+
+const orcamentoSchema = zod
+  .object({
+    nome: zod
+      .string()
+      .min(3, { message: "Nome deve ter pelo menos 3 caracteres." }),
+    telefone: zod.string().regex(/^\(\d{2}\)\s\d{4,5}-\d{4}$/, {
+      message: "Telefone deve estar no formato (XX) XXXXX-XXXX.",
+    }),
+
+    quantidadePecas: zod.coerce
+      .number({ error: "Quantidade de peças deve ser um número." })
+      .int({ message: "Quantidade deve ser um número inteiro." })
+      .positive({ message: "Quantidade deve ser maior que zero." }),
+    fileUploadEnabled: zod.boolean(),
+    anexo: zod.instanceof(File).optional(),
+  })
+  .refine(
+    (data) => {
+      if (data.fileUploadEnabled && data.anexo && data.anexo.size > 0) {
+        const maxFileSize = 10 * 1024 * 1024;
+        return data.anexo.size <= maxFileSize;
+      }
+      return true;
+    },
+    {
+      message: "O arquivo anexo deve ter no máximo 10MB.",
+      path: ["anexo"],
+    }
+  );
+
+interface FormState {
+  success: boolean;
   message: string;
-}
-
-function validateEmail(email: string): boolean {
-  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return emailPattern.test(email);
-}
-
-function validatePhone(phone: string): boolean {
-  const phonePattern = /^\(\d{2}\)\s\d{4,5}-\d{4}$/;
-  return phonePattern.test(phone);
-}
-
-function validatePartsQuantity(quantity: string): {
-  isValid: boolean;
-  value?: number;
-} {
-  const numericValue = parseInt(quantity, 10);
-
-  if (isNaN(numericValue)) {
-    return { isValid: false };
-  }
-
-  if (numericValue < 1) {
-    return { isValid: false };
-  }
-
-  return { isValid: true, value: numericValue };
+  errors?: Record<string, string[] | undefined>;
 }
 
 export async function submitOrcamento(
-  prevState: { success: boolean; message: string },
+  prevState: FormState,
   formData: FormData
-) {
-  const rawFormData = Object.fromEntries(formData.entries());
-  console.log("Dados recebidos no servidor:", rawFormData);
+): Promise<FormState> {
+  const rawFormData = {
+    ...Object.fromEntries(formData.entries()),
+    fileUploadEnabled: formData.get("fileUploadEnabled") === "true",
+    anexo: formData.get("anexo"),
+  };
 
-  const errors: ValidationError[] = [];
+  const validationResult = orcamentoSchema.safeParse(rawFormData);
 
-  const nome = formData.get("nome");
-  if (!nome || typeof nome !== "string" || nome.length < 3) {
-    errors.push({
-      field: "nome",
-      message: "Nome deve ter pelo menos 3 caracteres.",
-    });
-  }
+  if (!validationResult.success) {
+    const treeifiedErrors = zod.treeifyError(validationResult.error);
+    console.log("Erros de validação:", treeifiedErrors);
 
-  const telefone = formData.get("telefone");
-  if (!telefone || typeof telefone !== "string") {
-    errors.push({ field: "telefone", message: "Telefone é obrigatório." });
-  } else if (!validatePhone(telefone)) {
-    errors.push({
-      field: "telefone",
-      message: "Telefone deve estar no formato (XX) XXXXX-XXXX.",
-    });
-  }
+    const fieldErrors: Record<string, string[]> = {};
 
-  const quantidadePecasRaw = formData.get("quantidadePecas");
-  let quantidadePecas = 1;
+    function extractErrors(obj: any, path: string = "") {
+      if (obj && typeof obj === "object") {
+        if (Array.isArray(obj._errors) && obj._errors.length > 0) {
+          fieldErrors[path] = obj._errors;
+        }
 
-  if (quantidadePecasRaw && typeof quantidadePecasRaw === "string") {
-    const quantityValidation = validatePartsQuantity(quantidadePecasRaw);
-    if (!quantityValidation.isValid) {
-      errors.push({
-        field: "quantidadePecas",
-        message: "Quantidade de peças deve ser um número inteiro maior que 0.",
-      });
-    } else {
-      quantidadePecas = quantityValidation.value!;
+        for (const [key, value] of Object.entries(obj)) {
+          if (key !== "_errors") {
+            const newPath = path ? `${path}.${key}` : key;
+            extractErrors(value, newPath);
+          }
+        }
+      }
     }
+
+    extractErrors(treeifiedErrors);
+
+    return {
+      success: false,
+      message: "Por favor, corrija os erros no formulário.",
+      errors: fieldErrors,
+    };
   }
 
-  const fileUploadEnabled = formData.get("fileUploadEnabled") === "true";
-  const anexo = formData.get("anexo") as File | null;
+  const { nome, telefone, quantidadePecas, anexo } = validationResult.data;
 
-  if (fileUploadEnabled && anexo && anexo.size > 0) {
-    const maxFileSize = 10 * 1024 * 1024;
-    if (anexo.size > maxFileSize) {
-      errors.push({
-        field: "anexo",
-        message: "Arquivo deve ter no máximo 10MB.",
-      });
-    }
+  console.log("Dados validados com sucesso:", validationResult.data);
+
+  try {
+    // await new Promise((resolve) => setTimeout(resolve, 1500));
+
+    return {
+      success: true,
+      message: `Orçamento para "${nome}" enviado com sucesso!`,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: "Houve um erro inesperado ao enviar o orçamento.",
+    };
   }
-
-  if (errors.length > 0) {
-    const errorMessage = errors.map((error) => error.message).join(" ");
-    return { success: false, message: errorMessage };
-  }
-
-  console.log("Dados processados:", {
-    nome,
-    telefone,
-    quantidadePecas,
-    fileUploadEnabled,
-    hasFile: anexo && anexo.size > 0,
-  });
-
-  if (process.env.NODE_ENV !== "test") {
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-  }
-
-  const isSuccess = true;
-
-  if (!isSuccess) {
-    return { success: false, message: "Houve um erro ao enviar o orçamento." };
-  }
-
-  return { success: true, message: "Orçamento enviado com sucesso!" };
 }

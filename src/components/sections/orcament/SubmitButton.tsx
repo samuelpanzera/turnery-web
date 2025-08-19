@@ -26,7 +26,7 @@ export function SubmitButton({
     "py-3 px-6 sm:py-4 sm:px-8 rounded-lg shadow-md transition-all duration-200",
     "hover:scale-105 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-offset-2 focus:ring-offset-gray-800",
     "disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:scale-100",
-    "flex items-center justify-center gap-2 min-w-[200px] text-sm sm:text-base",
+    "flex items-center justify-center gap-2 min-w-[200px] text-sm sm:text-base cursor-pointer",
   ].join(" ");
 
   const finalClassName = className

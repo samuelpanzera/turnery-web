@@ -1,8 +1,26 @@
+"use client";
+
 import Image from "next/image";
+import { useIntersectionObserver } from "@/hooks/useIntersectionObserver";
 
 export default function HeroSection() {
+  const sectionRef = useIntersectionObserver<HTMLElement>({
+    threshold: 0.7, // Trigger when 70% of the section is visible
+    rootMargin: "0px 0px -200px 0px", // More aggressive offset to prevent early triggering
+    onIntersect: (isIntersecting) => {
+      // When hero section is in view, header should be expanded (false)
+      if (isIntersecting) {
+        window.dispatchEvent(
+          new CustomEvent("orcamentoInView", { detail: false })
+        );
+      }
+    },
+  });
   return (
-    <section className="relative bg-gray-900 text-white h-screen">
+    <section
+      ref={sectionRef}
+      className="relative bg-gray-900 text-white h-screen"
+    >
       <div className="absolute inset-0 bg-black opacity-50 z-1"></div>
       <Image
         src="/assets/Aaa.jpg"

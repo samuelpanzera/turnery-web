@@ -105,7 +105,6 @@ export default function Header() {
           </Link>
         </div>
 
-        {/* Desktop Navigation */}
         <nav
           className={`mr-0 md:mr-12 hidden md:flex gap-4 lg:gap-6 items-center font-bold text-white [&>a]:relative [&>a]:after:absolute [&>a]:after:bg-yellow-400 [&>a]:after:h-0.5 [&>a]:after:w-0 [&>a]:after:left-0 [&>a]:after:bottom-0 [&>a]:after:transition-all [&>a:hover]:after:w-full [&>a]:text-shadow-sm transition-all duration-300 ${
             isClient && isCollapsed ? "gap-4" : "gap-6"
@@ -134,7 +133,6 @@ export default function Header() {
           </Link>
         </nav>
 
-        {/* Mobile Menu Button */}
         <button
           onClick={toggleMobileMenu}
           className="md:hidden p-2 text-white focus:outline-none"
@@ -148,7 +146,6 @@ export default function Header() {
         </button>
       </div>
 
-      {/* Mobile Menu */}
       {mobileMenuOpen && (
         <div className="md:hidden bg-black/95 absolute top-full left-0 right-0 py-4 px-6 shadow-lg">
           <nav className="flex flex-col space-y-4 font-medium text-white">

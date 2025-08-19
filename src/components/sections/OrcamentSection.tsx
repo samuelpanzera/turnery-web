@@ -1,8 +1,26 @@
+"use client";
+
 import { OrcamentForm } from "./orcament/OrcamentForm";
+import { useIntersectionObserver } from "@/hooks/useIntersectionObserver";
 
 export default function OrcamentSection() {
+  const sectionRef = useIntersectionObserver<HTMLElement>({
+    threshold: 0.2,
+    rootMargin: "-50px 0px",
+    onIntersect: (isIntersecting) => {
+      if (isIntersecting) {
+        window.dispatchEvent(
+          new CustomEvent("orcamentoInView", { detail: true })
+        );
+      }
+    },
+  });
   return (
-    <section className="pt-20 pb-10 bg-gray-900 text-gray-100" id="orcamento">
+    <section
+      ref={sectionRef}
+      className="pt-20 pb-10 bg-gray-900 text-gray-100"
+      id="orcamento"
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <h2 className="text-4xl font-bold text-center mb-4 text-white">
           Solicite um Orçamento
