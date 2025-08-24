@@ -1,11 +1,5 @@
 import { useState, useCallback } from "react";
-
-export interface UsePartsQuantityReturn {
-  quantity: number;
-  error: string | null;
-  handleQuantityChange: (value: string) => void;
-  resetQuantity: () => void;
-}
+import { UsePartsQuantityReturn } from "../types";
 
 export function usePartsQuantity(
   defaultValue: number = 1

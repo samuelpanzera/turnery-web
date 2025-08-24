@@ -8,6 +8,7 @@ import {
   Cog,
   ScissorsSquare,
 } from "lucide-react";
+import { useIntersectionObserver } from "@/hooks/useIntersectionObserver";
 
 const services = [
   {
@@ -43,8 +44,24 @@ const services = [
 ];
 
 export default function ServicesSection() {
+  const sectionRef = useIntersectionObserver<HTMLElement>({
+    threshold: 0.3,
+    rootMargin: "-100px 0px",
+    onIntersect: (isIntersecting) => {
+      if (isIntersecting) {
+        window.dispatchEvent(
+          new CustomEvent("orcamentoInView", { detail: true })
+        );
+      }
+    },
+  });
+
   return (
-    <section className="py-12 sm:py-16 md:py-20 bg-gray-900 text-gray-100" id="servicos">
+    <section
+      ref={sectionRef}
+      className="py-12 sm:py-16 md:py-20 bg-gray-900 text-gray-100"
+      id="servicos"
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-8 sm:mb-12 text-white">
           Nossos Serviços
@@ -60,7 +77,9 @@ export default function ServicesSection() {
               <h3 className="text-lg sm:text-xl font-semibold mb-2 text-white">
                 {service.title}
               </h3>
-              <p className="text-gray-300 text-sm sm:text-base">{service.desc}</p>
+              <p className="text-gray-300 text-sm sm:text-base">
+                {service.desc}
+              </p>
             </div>
           ))}
         </div>

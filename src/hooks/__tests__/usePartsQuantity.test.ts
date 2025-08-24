@@ -1,6 +1,6 @@
 import { describe, it, expect } from "bun:test";
 import { renderHook, act } from "@testing-library/react";
-import { usePartsQuantity } from "../usePartsQuantity";
+import { usePartsQuantity } from "@/features/orcament/hooks/usePartsQuantity";
 
 describe("usePartsQuantity", () => {
   it("initializes with default value of 1", () => {
