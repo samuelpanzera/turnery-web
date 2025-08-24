@@ -1,8 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
-import Header from "@/components/headers/Header";
-import Footer from "@/components/footer/Footer";
-import Analytics from "@/components/analytics/Analytics";
+import Header from "@/components/layouts/Header";
+import Footer from "@/components/layouts/Footer";
+import Analytics from "@/lib/analytics";
 
 export const metadata: Metadata = {
   title: "TornoMix - Tornearia e soldas",
@@ -13,7 +13,7 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
-}
+};
 
 export default function RootLayout({
   children,

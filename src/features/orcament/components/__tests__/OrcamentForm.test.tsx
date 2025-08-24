@@ -12,7 +12,7 @@ import { OrcamentForm } from "../OrcamentForm";
 mock.module("@/app/actions", () => ({
   submitOrcamento: mock(() => Promise.resolve({ success: false, message: "" })),
 }));
-mock.module("@/hooks/useFileUpload", () => ({
+mock.module("../hooks/useFileUpload", () => ({
   useFileUpload: () => ({
     file: null,
     fileError: null,
@@ -186,7 +186,7 @@ describe("OrcamentForm Integration", () => {
     const user = userEvent.setup();
 
     const mockHandleFileChange = mock();
-    mock.module("@/hooks/useFileUpload", () => ({
+    mock.module("../hooks/useFileUpload", () => ({
       useFileUpload: () => ({
         file: null,
         fileError: "Arquivo deve ter no máximo 10MB",

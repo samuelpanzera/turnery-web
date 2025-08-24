@@ -4,11 +4,12 @@ import { describe, it, expect, beforeEach, afterEach, mock } from "bun:test";
 
 const mockUseFormStatus = mock(() => ({ pending: false }));
 
-const MockButton = ({ children, ...props }: any) => (
+const MockButton = ({ children, ...props }: React.ComponentProps<"button">) => (
   <button {...props}>{children}</button>
 );
 
-const mockCn = (...classes: any[]) => classes.filter(Boolean).join(" ");
+const mockCn = (...classes: (string | undefined | null | false)[]) =>
+  classes.filter(Boolean).join(" ");
 
 mock.module("react-dom", () => ({
   useFormStatus: mockUseFormStatus,

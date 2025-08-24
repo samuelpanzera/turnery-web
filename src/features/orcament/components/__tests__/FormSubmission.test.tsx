@@ -23,7 +23,7 @@ const mockUseFileUpload = mock(() => ({
   handleFileChange: mock(),
 }));
 
-mock.module("@/hooks/useFileUpload", () => ({
+mock.module("../hooks/useFileUpload", () => ({
   useFileUpload: mockUseFileUpload,
 }));
 

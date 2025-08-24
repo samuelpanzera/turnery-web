@@ -7,7 +7,7 @@ import {
   waitFor,
   cleanup,
 } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+
 import { ContactFields } from "../ContactFields";
 
 describe("ContactFields", () => {
@@ -181,10 +181,8 @@ describe("ContactFields", () => {
 
     const nomeField = screen.getByRole("textbox", { name: /nome/i });
 
-    // Initially should have normal styling
     expect(nomeField.className).toContain("border-gray-600");
 
-    // After validation error, should have error styling
     fireEvent.focus(nomeField);
     fireEvent.blur(nomeField);
 
@@ -192,7 +190,6 @@ describe("ContactFields", () => {
       expect(nomeField.className).toContain("border-red-500");
     });
 
-    // After fixing error, should return to normal styling
     fireEvent.change(nomeField, { target: { value: "João Silva" } });
     fireEvent.blur(nomeField);
 
@@ -206,10 +203,8 @@ describe("ContactFields", () => {
 
     const nomeField = screen.getByRole("textbox", { name: /nome/i });
 
-    // Initially should have aria-invalid="false"
     expect(nomeField.getAttribute("aria-invalid")).toBe("false");
 
-    // After validation error, should have aria-invalid="true"
     fireEvent.focus(nomeField);
     fireEvent.blur(nomeField);
 
@@ -218,7 +213,6 @@ describe("ContactFields", () => {
       expect(nomeField.getAttribute("aria-describedby")).toBe("nome-error");
     });
 
-    // After fixing error, should return to aria-invalid="false"
     fireEvent.change(nomeField, { target: { value: "João Silva" } });
     fireEvent.blur(nomeField);
 

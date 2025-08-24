@@ -10,13 +10,12 @@ const orcamentoSchema = zod
     telefone: zod.string().regex(/^\(\d{2}\)\s\d{4,5}-\d{4}$/, {
       message: "Telefone deve estar no formato (XX) XXXXX-XXXX.",
     }),
-
     quantidadePecas: zod.coerce
       .number({ error: "Quantidade de peças deve ser um número." })
       .int({ message: "Quantidade deve ser um número inteiro." })
       .positive({ message: "Quantidade deve ser maior que zero." }),
     fileUploadEnabled: zod.boolean(),
-    anexo: zod.instanceof(File).optional(),
+    anexo: zod.instanceof(File).nullable(),
   })
   .refine(
     (data) => {
@@ -35,7 +34,7 @@ const orcamentoSchema = zod
 interface FormState {
   success: boolean;
   message: string;
-  errors?: Record<string, string[] | undefined>;
+  errors?: string[];
 }
 
 export async function submitOrcamento(
@@ -48,30 +47,11 @@ export async function submitOrcamento(
     anexo: formData.get("anexo"),
   };
 
-  const validationResult = orcamentoSchema.safeParse(rawFormData);
+  const validationResult = orcamentoSchema.safeParse(rawFormData); // result a zodError with no file, but file is a opcional message: Input not instance of File
 
   if (!validationResult.success) {
-    const treeifiedErrors = zod.treeifyError(validationResult.error);
-    console.log("Erros de validação:", treeifiedErrors);
-
-    const fieldErrors: Record<string, string[]> = {};
-
-    function extractErrors(obj: any, path: string = "") {
-      if (obj && typeof obj === "object") {
-        if (Array.isArray(obj._errors) && obj._errors.length > 0) {
-          fieldErrors[path] = obj._errors;
-        }
-
-        for (const [key, value] of Object.entries(obj)) {
-          if (key !== "_errors") {
-            const newPath = path ? `${path}.${key}` : key;
-            extractErrors(value, newPath);
-          }
-        }
-      }
-    }
-
-    extractErrors(treeifiedErrors);
+    const fieldErrors = zod.treeifyError(validationResult.error).errors;
+    console.log("Erros de validação:", fieldErrors);
 
     return {
       success: false,
@@ -80,18 +60,19 @@ export async function submitOrcamento(
     };
   }
 
-  const { nome, telefone, quantidadePecas, anexo } = validationResult.data;
+  const { nome } = validationResult.data;
 
   console.log("Dados validados com sucesso:", validationResult.data);
 
   try {
-    // await new Promise((resolve) => setTimeout(resolve, 1500));
+    // Timout de carregamento
+    await new Promise((resolve) => setTimeout(resolve, 1000));
 
     return {
       success: true,
       message: `Orçamento para "${nome}" enviado com sucesso!`,
     };
-  } catch (error) {
+  } catch {
     return {
       success: false,
       message: "Houve um erro inesperado ao enviar o orçamento.",

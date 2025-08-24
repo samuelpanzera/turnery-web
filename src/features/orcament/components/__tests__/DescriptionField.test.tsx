@@ -43,7 +43,6 @@ describe("DescriptionField", () => {
 
     const textarea = screen.getByLabelText(/Infomações adicionais/i);
 
-    // Focus and blur without entering text
     await user.click(textarea);
     await user.tab();
 
@@ -134,7 +133,6 @@ describe("DescriptionField", () => {
 
     const textarea = screen.getByLabelText(/Infomações adicionais/i);
 
-    // First create an error
     await user.type(textarea, "short");
     await user.tab();
 
@@ -142,7 +140,6 @@ describe("DescriptionField", () => {
       expect(screen.getByRole("alert")).toBeInTheDocument();
     });
 
-    // Then fix it
     await user.clear(textarea);
     await user.type(
       textarea,

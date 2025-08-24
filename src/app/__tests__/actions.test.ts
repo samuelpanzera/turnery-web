@@ -88,8 +88,6 @@ describe("submitOrcamento", () => {
     formData.append("nome", "João Silva");
     formData.append("email", "joao@example.com");
     formData.append("telefone", "(11) 99999-9999");
-    // quantidadePecas not provided - should default to 1
-    // fileUploadEnabled not provided - should default to false
 
     const result = await submitOrcamento(initialState, formData);
 
@@ -105,7 +103,6 @@ describe("submitOrcamento", () => {
     formData.append("quantidadePecas", "1");
     formData.append("fileUploadEnabled", "true");
 
-    // Create a mock file that's too large (over 10MB)
     const largeFile = new File(["x".repeat(11 * 1024 * 1024)], "large.txt", {
       type: "text/plain",
     });

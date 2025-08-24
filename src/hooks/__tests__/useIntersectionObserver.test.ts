@@ -1,20 +1,21 @@
+import { describe, it, expect, beforeEach, jest, afterEach } from "bun:test";
+
 import { renderHook } from "@testing-library/react";
 import { useIntersectionObserver } from "../useIntersectionObserver";
 
-// Mock IntersectionObserver
-const mockIntersectionObserver = jest.fn();
 const mockObserve = jest.fn();
 const mockUnobserve = jest.fn();
+const mockDisconnect = jest.fn();
 
 beforeEach(() => {
-  mockIntersectionObserver.mockImplementation((callback) => ({
+  const mockIntersectionObserver = jest.fn().mockImplementation((callback) => ({
     observe: mockObserve,
     unobserve: mockUnobserve,
-    disconnect: jest.fn(),
+    disconnect: mockDisconnect,
     callback,
   }));
 
-  global.IntersectionObserver = mockIntersectionObserver;
+  global.IntersectionObserver = mockIntersectionObserver as any;
 });
 
 afterEach(() => {
@@ -25,7 +26,7 @@ describe("useIntersectionObserver", () => {
   it("should create an IntersectionObserver with default options", () => {
     const { result } = renderHook(() => useIntersectionObserver());
 
-    expect(mockIntersectionObserver).toHaveBeenCalledWith(
+    expect(global.IntersectionObserver).toHaveBeenCalledWith(
       expect.any(Function),
       {
         threshold: 0.1,
@@ -46,7 +47,7 @@ describe("useIntersectionObserver", () => {
 
     renderHook(() => useIntersectionObserver(options));
 
-    expect(mockIntersectionObserver).toHaveBeenCalledWith(
+    expect(global.IntersectionObserver).toHaveBeenCalledWith(
       expect.any(Function),
       {
         threshold: 0.5,
@@ -59,18 +60,21 @@ describe("useIntersectionObserver", () => {
     const onIntersect = jest.fn();
     let observerCallback: (entries: IntersectionObserverEntry[]) => void;
 
-    mockIntersectionObserver.mockImplementation((callback) => {
-      observerCallback = callback;
-      return {
-        observe: mockObserve,
-        unobserve: mockUnobserve,
-        disconnect: jest.fn(),
-      };
-    });
+    const mockIntersectionObserver = jest
+      .fn()
+      .mockImplementation((callback) => {
+        observerCallback = callback;
+        return {
+          observe: mockObserve,
+          unobserve: mockUnobserve,
+          disconnect: mockDisconnect,
+        };
+      });
+
+    global.IntersectionObserver = mockIntersectionObserver as any;
 
     renderHook(() => useIntersectionObserver({ onIntersect }));
 
-    // Simulate intersection
     const mockEntry = { isIntersecting: true } as IntersectionObserverEntry;
     observerCallback!([mockEntry]);
 
@@ -81,13 +85,11 @@ describe("useIntersectionObserver", () => {
     const { result } = renderHook(() => useIntersectionObserver());
     const mockElement = document.createElement("div");
 
-    // Simulate setting the ref
     Object.defineProperty(result.current, "current", {
       value: mockElement,
       writable: true,
     });
 
-    // Re-render to trigger useEffect
     renderHook(() => useIntersectionObserver());
 
     expect(mockObserve).toHaveBeenCalledWith(mockElement);

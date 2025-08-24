@@ -2,12 +2,7 @@
 
 import { useRef } from "react";
 import { FaUpload, FaCheck, FaTimes } from "react-icons/fa";
-
-interface FileUploadProps {
-  file: File | null;
-  fileError: string | null;
-  onFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-}
+import { FileUploadProps } from "../types";
 
 export function FileUpload({ file, fileError, onFileChange }: FileUploadProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);

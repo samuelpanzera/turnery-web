@@ -7,7 +7,7 @@ import {
   cleanup,
   fireEvent,
 } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+
 import { PartsQuantityField } from "../PartsQuantityField";
 
 describe("PartsQuantityField", () => {

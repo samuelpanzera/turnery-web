@@ -10,7 +10,7 @@ import {
 import userEvent from "@testing-library/user-event";
 import { FileUploadToggle } from "../FileUploadToggle";
 import { FileUpload } from "../FileUpload";
-import { useFileUploadToggle } from "@/hooks/useFileUploadToggle";
+import { useFileUploadToggle } from "../hooks/useFileUploadToggle";
 
 const mockUseFileUpload = mock(() => ({
   file: null as File | null,
@@ -18,7 +18,7 @@ const mockUseFileUpload = mock(() => ({
   handleFileChange: mock(() => {}),
 }));
 
-mock.module("@/hooks/useFileUpload", () => ({
+mock.module("../hooks/useFileUpload", () => ({
   useFileUpload: mockUseFileUpload,
 }));
 

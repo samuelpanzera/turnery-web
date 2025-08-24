@@ -5,10 +5,9 @@ import { useIntersectionObserver } from "@/hooks/useIntersectionObserver";
 
 export default function HeroSection() {
   const sectionRef = useIntersectionObserver<HTMLElement>({
-    threshold: 0.7, // Trigger when 70% of the section is visible
-    rootMargin: "0px 0px -200px 0px", // More aggressive offset to prevent early triggering
+    threshold: 0.7,
+    rootMargin: "0px 0px -200px 0px",
     onIntersect: (isIntersecting) => {
-      // When hero section is in view, header should be expanded (false)
       if (isIntersecting) {
         window.dispatchEvent(
           new CustomEvent("orcamentoInView", { detail: false })

@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-
-export interface ContactFieldsProps {}
+import { Input } from "@/components/ui/input";
+import { ContactFieldsProps } from "../types";
 
 interface FieldErrors {
   nome?: string;
@@ -92,130 +92,56 @@ export function ContactFields({}: ContactFieldsProps) {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 pb-4">
       <div className="lg:col-span-2">
-        <label
-          htmlFor="nome"
-          className="block text-sm font-medium text-white mb-2"
-        >
-          Nome*
-          <span className="sr-only">(obrigatório)</span>
-        </label>
-        <input
+        <Input
           type="text"
           id="nome"
           name="nome"
+          label="Nome"
           required
           minLength={3}
           autoComplete="name"
-          className={`w-full border rounded-md shadow-sm px-3 py-2 focus:outline-none focus:ring-1 transition-colors duration-200 bg-transparent text-white placeholder-gray-400 
-            ${
-              errors.nome
-                ? "border-red-500 focus:border-red-500 focus:ring-red-500"
-                : "border-gray-300 focus:border-tornomix-aco focus:ring-tornomix-aco"
-            }`}
+          placeholder="Digite seu nome completo"
+          error={errors.nome || undefined}
+          helpText={!errors.nome ? "Mínimo de 3 caracteres" : undefined}
           onChange={(e) => handleFieldChange("nome", e.target.value)}
           onBlur={(e) => handleFieldBlur("nome", e.target.value)}
-          aria-describedby={errors.nome ? "nome-error" : "nome-help"}
-          aria-invalid={errors.nome ? "true" : "false"}
-          placeholder="Digite seu nome completo"
         />
-        {!errors.nome && (
-          <p id="nome-help" className="text-xs text-gray-400 mt-1">
-            Mínimo de 3 caracteres
-          </p>
-        )}
-        {errors.nome && (
-          <p id="nome-error" className="text-sm text-red-500 mt-1" role="alert">
-            {errors.nome}
-          </p>
-        )}
       </div>
 
       <div>
-        <label
-          htmlFor="email"
-          className="block text-sm font-medium text-white mb-2"
-        >
-          Email
-          <span className="sr-only">(obrigatório)</span>
-        </label>
-        <input
+        <Input
           type="email"
           id="email"
           name="email"
+          label="Email"
           required
           autoComplete="email"
-          className={`w-full border rounded-md shadow-sm px-3 py-2 focus:outline-none focus:ring-1 transition-colors duration-200 bg-transparent text-white placeholder-gray-400 ${
-            errors.email
-              ? "border-red-500 focus:border-red-500 focus:ring-red-500"
-              : "border-gray-300 focus:border-tornomix-aco focus:ring-tornomix-aco"
-          }`}
+          placeholder="seu@email.com"
+          error={errors.email || undefined}
+          helpText={!errors.email ? "Formato: exemplo@dominio.com" : undefined}
           onChange={(e) => handleFieldChange("email", e.target.value)}
           onBlur={(e) => handleFieldBlur("email", e.target.value)}
-          aria-describedby={errors.email ? "email-error" : "email-help"}
-          aria-invalid={errors.email ? "true" : "false"}
-          placeholder="seu@email.com"
         />
-        {!errors.email && (
-          <p id="email-help" className="text-xs text-gray-400 mt-1">
-            Formato: exemplo@dominio.com
-          </p>
-        )}
-        {errors.email && (
-          <p
-            id="email-error"
-            className="text-sm text-red-500 mt-1"
-            role="alert"
-          >
-            {errors.email}
-          </p>
-        )}
       </div>
 
       <div>
-        <label
-          htmlFor="telefone"
-          className="block text-sm font-medium text-white mb-2"
-        >
-          Telefone*
-          <span className="sr-only">(obrigatório)</span>
-        </label>
-        <input
+        <Input
           type="tel"
           id="telefone"
           name="telefone"
+          label="Telefone"
           required
           autoComplete="tel"
           placeholder="(11) 99999-9999"
           maxLength={15}
-          className={`w-full border rounded-md shadow-sm px-3 py-2 focus:outline-none focus:ring-1 transition-colors duration-200 bg-transparent text-white placeholder-gray-400 ${
-            errors.telefone
-              ? "border-red-500 focus:border-red-500 focus:ring-red-500"
-              : "border-gray-300 focus:border-tornomix-aco focus:ring-tornomix-aco"
-          }`}
+          error={errors.telefone || undefined}
+          helpText={!errors.telefone ? "Formato: (XX) XXXXX-XXXX" : undefined}
           onChange={(e) => {
             handlePhoneChange(e);
             handleFieldChange("telefone", e.target.value);
           }}
           onBlur={(e) => handleFieldBlur("telefone", e.target.value)}
-          aria-describedby={
-            errors.telefone ? "telefone-error" : "telefone-help"
-          }
-          aria-invalid={errors.telefone ? "true" : "false"}
         />
-        {!errors.telefone && (
-          <p id="telefone-help" className="text-xs text-gray-400 mt-1">
-            Formato: (XX) XXXXX-XXXX
-          </p>
-        )}
-        {errors.telefone && (
-          <p
-            id="telefone-error"
-            className="text-sm text-red-500 mt-1"
-            role="alert"
-          >
-            {errors.telefone}
-          </p>
-        )}
       </div>
     </div>
   );

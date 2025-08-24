@@ -1,15 +1,6 @@
-import { usePartsQuantity } from "@/hooks/usePartsQuantity";
+import { usePartsQuantity } from "@/hooks/usePartsQuantity"; 
 import React from "react";
-
-export interface PartsQuantityFieldProps {
-  defaultValue?: number;
-  onChange?: (quantity: number) => void;
-  name?: string;
-  id?: string;
-  // Toggle props
-  isFileUploadEnabled?: boolean;
-  onToggleFileUpload?: (enabled: boolean) => void;
-}
+import { PartsQuantityFieldProps } from "../types";
 
 export function PartsQuantityField({
   defaultValue = 1,
@@ -26,7 +17,6 @@ export function PartsQuantityField({
     const value = e.target.value;
     handleQuantityChange(value);
 
-    // Call onChange callback if provided
     if (onChange) {
       const numericValue = parseInt(value, 10);
       if (!isNaN(numericValue) && numericValue >= 1) {
@@ -39,7 +29,6 @@ export function PartsQuantityField({
 
   return (
     <div className="flex flex-col sm:flex-row sm:items-start gap-6">
-      {/* Quantidade de Peças */}
       <div className="max-w-xs">
         <label
           htmlFor={id}
@@ -91,7 +80,6 @@ export function PartsQuantityField({
         )}
       </div>
 
-      {/* Toggle de Upload de Arquivos */}
       {onToggleFileUpload && (
         <div className="flex flex-col">
           <label className="block text-sm font-medium text-white mb-2">

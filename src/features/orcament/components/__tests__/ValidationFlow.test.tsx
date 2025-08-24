@@ -18,7 +18,7 @@ mock.module("@/app/actions", () => ({
   submitOrcamento: mockSubmitOrcamento,
 }));
 
-mock.module("@/hooks/useFileUpload", () => ({
+mock.module("../hooks/useFileUpload", () => ({
   useFileUpload: () => ({
     file: null,
     fileError: null,
@@ -186,7 +186,7 @@ describe("Validation Flow Tests", () => {
   });
 
   it("handles validation with file upload enabled", async () => {
-    mock.module("@/hooks/useFileUpload", () => ({
+    mock.module("../hooks/useFileUpload", () => ({
       useFileUpload: () => ({
         file: null,
         fileError: "Arquivo deve ter no máximo 10MB",
@@ -272,7 +272,7 @@ describe("Validation Flow Tests", () => {
     const user = userEvent.setup();
     render(<OrcamentForm />);
 
-    await user.type(screen.getByRole("textbox", { name: /nome/i }), "Jo"); // Too short
+    await user.type(screen.getByRole("textbox", { name: /nome/i }), "Jo");
     await user.type(
       screen.getByRole("textbox", { name: /email/i }),
       "valid@example.com"
