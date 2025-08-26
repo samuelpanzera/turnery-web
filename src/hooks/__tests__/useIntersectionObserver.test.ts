@@ -8,14 +8,17 @@ const mockUnobserve = jest.fn();
 const mockDisconnect = jest.fn();
 
 beforeEach(() => {
-  const mockIntersectionObserver = jest.fn().mockImplementation((callback) => ({
-    observe: mockObserve,
-    unobserve: mockUnobserve,
-    disconnect: mockDisconnect,
-    callback,
-  }));
+  const mockIntersectionObserver = jest
+    .fn()
+    .mockImplementation((callback: IntersectionObserverCallback) => ({
+      observe: mockObserve,
+      unobserve: mockUnobserve,
+      disconnect: mockDisconnect,
+      callback,
+    }));
 
-  global.IntersectionObserver = mockIntersectionObserver as any;
+  global.IntersectionObserver =
+    mockIntersectionObserver as unknown as typeof IntersectionObserver;
 });
 
 afterEach(() => {
@@ -58,11 +61,11 @@ describe("useIntersectionObserver", () => {
 
   it("should call onIntersect when intersection changes", () => {
     const onIntersect = jest.fn();
-    let observerCallback: (entries: IntersectionObserverEntry[]) => void;
+    let observerCallback: IntersectionObserverCallback;
 
     const mockIntersectionObserver = jest
       .fn()
-      .mockImplementation((callback) => {
+      .mockImplementation((callback: IntersectionObserverCallback) => {
         observerCallback = callback;
         return {
           observe: mockObserve,
@@ -71,12 +74,14 @@ describe("useIntersectionObserver", () => {
         };
       });
 
-    global.IntersectionObserver = mockIntersectionObserver as any;
+    global.IntersectionObserver =
+      mockIntersectionObserver as unknown as typeof IntersectionObserver;
 
     renderHook(() => useIntersectionObserver({ onIntersect }));
 
     const mockEntry = { isIntersecting: true } as IntersectionObserverEntry;
-    observerCallback!([mockEntry]);
+    const mockObserver = {} as IntersectionObserver;
+    observerCallback!([mockEntry], mockObserver);
 
     expect(onIntersect).toHaveBeenCalledWith(true);
   });

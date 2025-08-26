@@ -7,7 +7,7 @@ export interface OrcamentFormData {
   fileUploadEnabled: boolean;
 }
 
-export interface ContactFieldsProps {}
+export type ContactFieldsProps = Record<string, never>;
 
 export interface FileUploadProps {
   file: File | null;
