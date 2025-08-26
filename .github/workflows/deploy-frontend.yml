@@ -1,4 +1,4 @@
-name: Deploy Frontend (Next.js) to Heroku
+name: Build com Bun e Deploy no Heroku
 
 on:
   push:
@@ -12,13 +12,21 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v1
         with:
-          fetch-depth: 0
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Build application
+        run: bun run build
 
       - name: Deploy to Heroku
-        env:
-          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-          HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME_FRONTEND }}
-        run: |
-          git remote add heroku https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git
-          git push heroku HEAD:main --force
+        uses: akhileshns/heroku-deploy@v3.13.0
+        with:
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          heroku_app_name: ${{ secrets.HEROKU_APP_NAME_FRONTEND }}
+          heroku_email: ${{ secrets.HEROKU_EMAIL }}
