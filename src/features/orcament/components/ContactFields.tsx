@@ -114,7 +114,6 @@ export function ContactFields({}: ContactFieldsProps) {
           id="email"
           name="email"
           label="Email"
-          required
           autoComplete="email"
           placeholder="seu@email.com"
           error={errors.email || undefined}

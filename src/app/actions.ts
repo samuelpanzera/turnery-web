@@ -1,5 +1,6 @@
 "use server";
 
+import api from "@/lib/api/apiClient";
 import zod from "zod";
 
 const orcamentoSchema = zod
@@ -7,6 +8,10 @@ const orcamentoSchema = zod
     nome: zod
       .string()
       .min(3, { message: "Nome deve ter pelo menos 3 caracteres." }),
+    email: zod
+      .email({ message: "Email deve ter um formato válido." })
+      .optional()
+      .or(zod.literal("")),
     telefone: zod.string().regex(/^\(\d{2}\)\s\d{4,5}-\d{4}$/, {
       message: "Telefone deve estar no formato (XX) XXXXX-XXXX.",
     }),
@@ -20,13 +25,13 @@ const orcamentoSchema = zod
   .refine(
     (data) => {
       if (data.fileUploadEnabled && data.anexo && data.anexo.size > 0) {
-        const maxFileSize = 10 * 1024 * 1024;
+        const maxFileSize = 1 * 1024 * 1024;
         return data.anexo.size <= maxFileSize;
       }
       return true;
     },
     {
-      message: "O arquivo anexo deve ter no máximo 10MB.",
+      message: "O arquivo anexo deve ter no máximo 1MB.",
       path: ["anexo"],
     }
   );
@@ -47,7 +52,7 @@ export async function submitOrcamento(
     anexo: formData.get("anexo"),
   };
 
-  const validationResult = orcamentoSchema.safeParse(rawFormData); // result a zodError with no file, but file is a opcional message: Input not instance of File
+  const validationResult = orcamentoSchema.safeParse(rawFormData);
 
   if (!validationResult.success) {
     const fieldErrors = zod.treeifyError(validationResult.error).errors;
@@ -65,17 +70,20 @@ export async function submitOrcamento(
   console.log("Dados validados com sucesso:", validationResult.data);
 
   try {
-    // Timout de carregamento
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    await api.post("/orcament", validationResult.data);
 
     return {
       success: true,
       message: `Orçamento para "${nome}" enviado com sucesso!`,
     };
-  } catch {
+  } catch (e) {
+    console.error("Erro ao enviar orçamento:", e);
+
     return {
       success: false,
-      message: "Houve um erro inesperado ao enviar o orçamento.",
+      message:
+        "Houve um erro inesperado ao enviar o orçamento." +
+        (e instanceof Error ? e.message : ""),
     };
   }
 }
