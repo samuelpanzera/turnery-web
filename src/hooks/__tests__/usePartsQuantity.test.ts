@@ -1,6 +1,6 @@
 import { describe, it, expect } from "bun:test";
 import { renderHook, act } from "@testing-library/react";
-import { usePartsQuantity } from "../usePartsQuantity";
+import { usePartsQuantity } from "@/features/orcament/hooks/usePartsQuantity";
 
 describe("usePartsQuantity", () => {
   it("initializes with default value of 1", () => {
@@ -61,7 +61,7 @@ describe("usePartsQuantity", () => {
       result.current.handleQuantityChange("2.5");
     });
 
-    expect(result.current.quantity).toBe(1); // Should remain unchanged
+    expect(result.current.quantity).toBe(1);
     expect(result.current.error).toBe(
       "A quantidade deve ser um número inteiro positivo"
     );
@@ -74,7 +74,7 @@ describe("usePartsQuantity", () => {
       result.current.handleQuantityChange("-5");
     });
 
-    expect(result.current.quantity).toBe(1); // Should remain unchanged
+    expect(result.current.quantity).toBe(1);
     expect(result.current.error).toBe(
       "A quantidade deve ser um número inteiro positivo"
     );
@@ -87,7 +87,7 @@ describe("usePartsQuantity", () => {
       result.current.handleQuantityChange("abc");
     });
 
-    expect(result.current.quantity).toBe(1); // Should remain unchanged
+    expect(result.current.quantity).toBe(1);
     expect(result.current.error).toBe(
       "A quantidade deve ser um número inteiro positivo"
     );
@@ -96,7 +96,7 @@ describe("usePartsQuantity", () => {
   it("clears error when valid input is provided after error", () => {
     const { result } = renderHook(() => usePartsQuantity());
 
-    // First, create an error
+  
     act(() => {
       result.current.handleQuantityChange("2.5");
     });
@@ -104,7 +104,7 @@ describe("usePartsQuantity", () => {
       "A quantidade deve ser um número inteiro positivo"
     );
 
-    // Then provide valid input
+  
     act(() => {
       result.current.handleQuantityChange("5");
     });
@@ -115,7 +115,7 @@ describe("usePartsQuantity", () => {
   it("resets quantity and error with resetQuantity", () => {
     const { result } = renderHook(() => usePartsQuantity(7));
 
-    // Change quantity and create error
+  
     act(() => {
       result.current.handleQuantityChange("15");
     });
@@ -128,7 +128,7 @@ describe("usePartsQuantity", () => {
       "A quantidade deve ser um número inteiro positivo"
     );
 
-    // Reset
+  
     act(() => {
       result.current.resetQuantity();
     });
@@ -160,7 +160,7 @@ describe("usePartsQuantity", () => {
       "A quantidade deve ser um número inteiro positivo"
     );
 
-    // Quantity should remain at default throughout
+  
     expect(result.current.quantity).toBe(1);
   });
 
@@ -178,30 +178,30 @@ describe("usePartsQuantity", () => {
   it("maintains state consistency across multiple operations", () => {
     const { result } = renderHook(() => usePartsQuantity(3));
 
-    // Valid input
+  
     act(() => {
       result.current.handleQuantityChange("10");
     });
     expect(result.current.quantity).toBe(10);
     expect(result.current.error).toBeNull();
 
-    // Invalid input
+  
     act(() => {
       result.current.handleQuantityChange("2.5");
     });
-    expect(result.current.quantity).toBe(10); // Should remain unchanged
+    expect(result.current.quantity).toBe(10);
     expect(result.current.error).toBe(
       "A quantidade deve ser um número inteiro positivo"
     );
 
-    // Another valid input
+  
     act(() => {
       result.current.handleQuantityChange("7");
     });
     expect(result.current.quantity).toBe(7);
     expect(result.current.error).toBeNull();
 
-    // Reset
+  
     act(() => {
       result.current.resetQuantity();
     });

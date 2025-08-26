@@ -1,6 +1,6 @@
 import { describe, it, expect } from "bun:test";
 import { renderHook, act } from "@testing-library/react";
-import { useFileUploadToggle } from "../useFileUploadToggle";
+import { useFileUploadToggle } from "@/features/orcament/hooks/useFileUploadToggle";
 
 describe("useFileUploadToggle", () => {
   it("initializes with default value of false", () => {
@@ -57,16 +57,13 @@ describe("useFileUploadToggle", () => {
   it("maintains state consistency", () => {
     const { result } = renderHook(() => useFileUploadToggle());
 
-    // Initial state
     expect(result.current.isFileUploadEnabled).toBe(false);
 
-    // Enable
     act(() => {
       result.current.toggleFileUpload(true);
     });
     expect(result.current.isFileUploadEnabled).toBe(true);
 
-    // Setting to same value should maintain state
     act(() => {
       result.current.toggleFileUpload(true);
     });

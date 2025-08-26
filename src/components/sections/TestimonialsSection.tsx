@@ -1,5 +1,3 @@
-"use client";
-
 import { Star, ExternalLink } from "lucide-react";
 import Link from "next/link";
 
