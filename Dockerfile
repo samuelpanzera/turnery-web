@@ -1,7 +1,10 @@
-# Build stage - onde fazemos o build da aplicação
-FROM oven/bun:1.0 AS build
+# Build stage - usando Node.js para compatibilidade total com Next.js
+FROM node:20-alpine AS build
 
 WORKDIR /app
+
+# Instalar Bun no container Node.js
+RUN npm install -g bun
 
 # Copiar arquivos de configuração primeiro para otimizar cache do Docker
 COPY package.json bun.lockb ./
@@ -21,12 +24,15 @@ COPY src ./src
 COPY types ./types
 
 # Build da aplicação Next.js
-RUN ls -la && bun run build
+RUN bun run build
 
-# Production stage - imagem final otimizada apenas com arquivos necessários
-FROM oven/bun:1.0-slim AS production
+# Production stage - usando Node.js para runtime
+FROM node:20-alpine AS production
 
 WORKDIR /app
+
+# Instalar Bun para runtime
+RUN npm install -g bun
 
 # Definir NODE_ENV como production
 ENV NODE_ENV=production
