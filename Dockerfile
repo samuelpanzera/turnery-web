@@ -1,5 +1,5 @@
 # Build stage - onde fazemos o build da aplicação
-FROM oven/bun:1.0 as build
+FROM oven/bun:1.0 AS build
 
 WORKDIR /app
 
@@ -10,6 +10,7 @@ COPY next.config.ts ./
 COPY tailwind.config.js ./
 COPY postcss.config.mjs ./
 COPY components.json ./
+COPY eslint.config.mjs ./
 
 # Instalar dependências
 RUN bun install --frozen-lockfile
@@ -20,10 +21,10 @@ COPY src ./src
 COPY types ./types
 
 # Build da aplicação Next.js
-RUN bun run build
+RUN ls -la && bun run build
 
 # Production stage - imagem final otimizada apenas com arquivos necessários
-FROM oven/bun:1.0-slim as production
+FROM oven/bun:1.0-slim AS production
 
 WORKDIR /app
 
