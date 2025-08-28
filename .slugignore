@@ -1,0 +1,33 @@
+# Development files
+.git/
+.github/
+.vscode/
+*.md
+README.md
+
+# Test files
+**/__tests__/
+**/*.test.*
+**/*.spec.*
+test-setup.ts
+coverage/
+
+# Build artifacts
+.next/cache/
+.next/static/chunks/webpack-*
+
+# Dependencies that can be reinstalled
+node_modules/.cache/
+node_modules/.bin/
+node_modules/*/README.md
+node_modules/*/CHANGELOG.md
+node_modules/*/LICENSE*
+
+# Bun specific
+.bun/
+bun.lockb.backup
+
+# Development tools
+eslint.config.mjs
+tailwind.config.js
+postcss.config.mjs

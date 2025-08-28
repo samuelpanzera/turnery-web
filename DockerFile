@@ -1,30 +1,50 @@
-
-
+# Build stage - onde fazemos o build da aplicação
 FROM oven/bun:1.0 as build
 
 WORKDIR /app
 
+# Copiar arquivos de configuração primeiro para otimizar cache do Docker
 COPY package.json bun.lockb ./
 COPY tsconfig.json ./
-COPY next.config.mjs ./
-COPY public ./public
-COPY src ./src
+COPY next.config.ts ./
+COPY tailwind.config.js ./
+COPY postcss.config.mjs ./
+COPY components.json ./
 
+# Instalar dependências
 RUN bun install --frozen-lockfile
 
+# Copiar código fonte
+COPY public ./public
+COPY src ./src
+COPY types ./types
+
+# Build da aplicação Next.js
 RUN bun run build
 
-
+# Production stage - imagem final otimizada apenas com arquivos necessários
 FROM oven/bun:1.0-slim as production
 
 WORKDIR /app
 
+# Definir NODE_ENV como production
+ENV NODE_ENV=production
+ENV PORT=3000
+
+# Copiar apenas os arquivos necessários para produção
 COPY --from=build /app/.next ./.next
 COPY --from=build /app/node_modules ./node_modules
 COPY --from=build /app/package.json ./package.json
 COPY --from=build /app/public ./public
-COPY --from=build /app/next.config.mjs ./
+COPY --from=build /app/next.config.ts ./
+
+# Criar usuário não-root por segurança
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nextjs
+RUN chown -R nextjs:nodejs /app
+USER nextjs
 
 EXPOSE 3000
 
+# Comando para iniciar a aplicação
 CMD ["bun", "run", "start"]

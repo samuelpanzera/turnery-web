@@ -1,4 +1,4 @@
-name: Build com Bun e Deploy no Heroku
+name: Build e Deploy via Heroku Container Registry
 
 on:
   push:
@@ -9,6 +9,7 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -20,16 +21,51 @@ jobs:
         with:
           bun-version: latest
 
+      # Fazer o build local da aplicação no GitHub Actions
       - name: Install dependencies
         run: bun install --frozen-lockfile
 
-      - name: Build application
+      - name: Build application locally
         run: bun run build
+        env:
+          NODE_ENV: production
 
-      - name: Deploy to Heroku
+      # Login no Heroku Container Registry
+      - name: Login to Heroku Container Registry
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        run: |
+          echo $HEROKU_API_KEY | docker login --username=_ --password-stdin registry.heroku.com
+
+      # Build da imagem Docker de produção
+      - name: Build Docker image
+        env:
+          HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME_FRONTEND }}
+        run: |
+          docker build -t registry.heroku.com/$HEROKU_APP_NAME/web .
+
+      # Push da imagem para o Heroku Container Registry
+      - name: Push image to Heroku Container Registry
+        env:
+          HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME_FRONTEND }}
+        run: |
+          docker push registry.heroku.com/$HEROKU_APP_NAME/web
+
+      # Release da aplicação no Heroku
+      - name: Release application on Heroku
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
           HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME_FRONTEND }}
         run: |
-          git remote add heroku https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git
-          git push heroku HEAD:main --force
+          curl -X PATCH https://api.heroku.com/apps/$HEROKU_APP_NAME/formation \
+            -d '{
+              "updates": [
+                {
+                  "type": "web",
+                  "docker_image": "'$(docker inspect registry.heroku.com/$HEROKU_APP_NAME/web --format={{.Id}})''"
+                }
+              ]
+            }' \
+            -H "Content-Type: application/json" \
+            -H "Accept: application/vnd.heroku+json; version=3.docker-releases" \
+            -H "Authorization: Bearer $HEROKU_API_KEY"
